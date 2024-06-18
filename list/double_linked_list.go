@@ -41,16 +41,16 @@ func (ll *DoubleLinkedList) GetTail() interface{} {
 	return ll.tail.data
 }
 
-func (ll *DoubleLinkedList) checkIfEmptyAndAdd(newNode *doubleLinkNode) bool {
-	if ll.size == 0 {
-		// insert first node in doubly linked list
-		ll.head = newNode
-		ll.tail = newNode
-		ll.size++
-		return true
-	}
-	return false
-}
+//func (ll *DoubleLinkedList) checkIfEmptyAndAdd(newNode *doubleLinkNode) bool {
+//	if ll.size == 0 {
+//		// insert first node in doubly linked list
+//		ll.head = newNode
+//		ll.tail = newNode
+//		ll.size++
+//		return true
+//	}
+//	return false
+//}
 
 func (ll *DoubleLinkedList) GetAtPosition(position int) (interface{}, error) {
 	if position < 1 || position > ll.size+1 {
@@ -129,4 +129,62 @@ func (ll *DoubleLinkedList) Insert(position int, data interface{}) error {
 	current.prev.next = node
 	current.next.prev = node
 	return nil
+}
+
+func (ll *DoubleLinkedList) DeleteFirst() (interface{}, error) {
+	if ll.head == nil {
+		return nil, fmt.Errorf("deleteFront: List is empty")
+	}
+
+	data := ll.head.data
+	if ll.size == 1 {
+		ll.head = nil
+		ll.tail = nil
+		ll.size = 0
+		return data, nil
+	}
+
+	ll.head.next.prev = nil
+	ll.head = ll.head.next
+	ll.size--
+	return data, nil
+}
+
+func (ll *DoubleLinkedList) DeleteLast() (interface{}, error) {
+	if ll.tail == nil {
+		return nil, fmt.Errorf("deleteFront: List is empty")
+	}
+
+	current := ll.tail
+	if ll.size == 1 {
+		ll.head = nil
+		ll.tail = nil
+		ll.size = 0
+		return current.data, nil
+	}
+
+	ll.tail.prev.next = nil
+	ll.tail = ll.tail.prev
+	ll.size--
+	return current.data, nil
+}
+
+func (ll *DoubleLinkedList) DeleteAt(position int) (interface{}, error) {
+	if position < 1 || position > ll.size+1 {
+		return nil, fmt.Errorf("insert: Index out of bounds")
+	}
+	var current, prev *doubleLinkNode
+	current = ll.head
+	prev = nil
+
+	for position > 1 {
+		prev = current
+		current = current.next
+		position--
+	}
+
+	prev.next = current.next
+	current.next.prev = prev
+	ll.size--
+	return current.data, nil
 }
