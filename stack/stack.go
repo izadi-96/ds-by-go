@@ -8,4 +8,5 @@ type Stack interface {
 	IsEmpty() bool
 	IsFull() bool
 	Size() uint
+	Capacity() uint
 }

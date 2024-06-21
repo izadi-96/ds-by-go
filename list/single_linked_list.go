@@ -4,13 +4,13 @@ import (
 	"fmt"
 )
 
-type singleLinkedNode struct {
+type SingleLinkedNode struct {
 	data interface{}
-	next *singleLinkedNode
+	next *SingleLinkedNode
 }
 
 type SingleLinkedList struct {
-	head *singleLinkedNode
+	head *SingleLinkedNode
 	size int
 }
 
@@ -44,7 +44,7 @@ func (ll *SingleLinkedList) GetAtPosition(position int) (interface{}, error) {
 }
 
 func (ll *SingleLinkedList) InsertBeginning(data interface{}) {
-	node := &singleLinkedNode{
+	node := &SingleLinkedNode{
 		data: data,
 		next: nil,
 	}
@@ -59,7 +59,7 @@ func (ll *SingleLinkedList) InsertBeginning(data interface{}) {
 }
 
 func (ll *SingleLinkedList) InsertEnd(data interface{}) {
-	node := &singleLinkedNode{
+	node := &SingleLinkedNode{
 		data: data,
 		next: nil,
 	}
@@ -79,11 +79,11 @@ func (ll *SingleLinkedList) Insert(position int, data interface{}) error {
 	if position < 1 || position > ll.size+1 {
 		return fmt.Errorf("insert: Index out of bounds")
 	}
-	node := &singleLinkedNode{
+	node := &SingleLinkedNode{
 		data: data,
 		next: nil,
 	}
-	var prev, current *singleLinkedNode
+	var prev, current *SingleLinkedNode
 	current = ll.head
 	prev = nil
 
@@ -119,7 +119,7 @@ func (ll *SingleLinkedList) DeleteLast() (interface{}, error) {
 		return nil, fmt.Errorf("deleteFront: List is empty")
 	}
 
-	var current, prev *singleLinkedNode
+	var current, prev *SingleLinkedNode
 	current = ll.head
 	prev = nil
 	for current.next != nil {
@@ -140,7 +140,7 @@ func (ll *SingleLinkedList) DeleteAt(position int) (interface{}, error) {
 		return nil, fmt.Errorf("insert: Index out of bounds")
 	}
 
-	var current, prev *singleLinkedNode
+	var current, prev *SingleLinkedNode
 	current = ll.head
 	prev = nil
 	for position > 1 {
@@ -156,4 +156,14 @@ func (ll *SingleLinkedList) DeleteAt(position int) (interface{}, error) {
 	}
 	ll.size--
 	return current.data, nil
+}
+
+func (ll *SingleLinkedList) FindKthFromEnd(n int) interface{} {
+	first, second := ll.head, ll.head
+	for ; n > 0; n-- {
+		second = second.next
+	}
+	for ; second.next != nil; first, second = first.next, second.next {
+	}
+	return first.next.data
 }

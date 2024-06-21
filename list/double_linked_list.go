@@ -4,15 +4,19 @@ import (
 	"fmt"
 )
 
-type doubleLinkNode struct {
+type DoubleLinkNode struct {
 	data interface{}
-	next *doubleLinkNode
-	prev *doubleLinkNode
+	next *DoubleLinkNode
+	prev *DoubleLinkNode
+}
+
+func (n *DoubleLinkNode) Get() interface{} {
+	return n
 }
 
 type DoubleLinkedList struct {
-	head *doubleLinkNode
-	tail *doubleLinkNode
+	head *DoubleLinkNode
+	tail *DoubleLinkNode
 	size int
 }
 
@@ -41,7 +45,7 @@ func (ll *DoubleLinkedList) GetTail() interface{} {
 	return ll.tail.data
 }
 
-//func (ll *DoubleLinkedList) checkIfEmptyAndAdd(newNode *doubleLinkNode) bool {
+//func (ll *DoubleLinkedList) checkIfEmptyAndAdd(newNode *DoubleLinkNode) bool {
 //	if ll.size == 0 {
 //		// insert first node in doubly linked list
 //		ll.head = newNode
@@ -66,7 +70,7 @@ func (ll *DoubleLinkedList) GetAtPosition(position int) (interface{}, error) {
 }
 
 func (ll *DoubleLinkedList) InsertBeginning(data interface{}) {
-	node := &doubleLinkNode{
+	node := &DoubleLinkNode{
 		data: data,
 		next: nil,
 		prev: nil,
@@ -85,7 +89,7 @@ func (ll *DoubleLinkedList) InsertBeginning(data interface{}) {
 }
 
 func (ll *DoubleLinkedList) InsertEnd(data interface{}) {
-	node := &doubleLinkNode{
+	node := &DoubleLinkNode{
 		data: data,
 		next: nil,
 		prev: nil,
@@ -120,7 +124,7 @@ func (ll *DoubleLinkedList) Insert(position int, data interface{}) error {
 		position--
 	}
 
-	node := &doubleLinkNode{
+	node := &DoubleLinkNode{
 		data: data,
 	}
 	node.prev = current.prev
@@ -173,7 +177,7 @@ func (ll *DoubleLinkedList) DeleteAt(position int) (interface{}, error) {
 	if position < 1 || position > ll.size+1 {
 		return nil, fmt.Errorf("insert: Index out of bounds")
 	}
-	var current, prev *doubleLinkNode
+	var current, prev *DoubleLinkNode
 	current = ll.head
 	prev = nil
 

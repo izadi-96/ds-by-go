@@ -33,6 +33,10 @@ func (s *SimpleStack) Size() uint {
 	return uint(s.top + 1)
 }
 
+func (s *SimpleStack) Capacity() uint {
+	return s.capacity
+}
+
 func (s *SimpleStack) Push(data interface{}) error {
 	if s.IsFull() {
 		return errors.New("stack is full")
