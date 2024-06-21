@@ -5,8 +5,8 @@ import (
 )
 
 type SingleLinkedNode struct {
-	data interface{}
-	next *SingleLinkedNode
+	Date interface{}
+	Next *SingleLinkedNode
 }
 
 type SingleLinkedList struct {
@@ -20,8 +20,8 @@ func (ll *SingleLinkedList) Display() error {
 	}
 	current := ll.head
 	for current != nil {
-		fmt.Printf("%v -> ", current.data)
-		current = current.next
+		fmt.Printf("%v -> ", current.Date)
+		current = current.Next
 	}
 	fmt.Println()
 	return nil
@@ -38,21 +38,21 @@ func (ll *SingleLinkedList) GetAtPosition(position int) (interface{}, error) {
 
 	current := ll.head
 	for position > 1 {
-		current = current.next
+		current = current.Next
 	}
-	return current.data, nil
+	return current.Date, nil
 }
 
 func (ll *SingleLinkedList) InsertBeginning(data interface{}) {
 	node := &SingleLinkedNode{
-		data: data,
-		next: nil,
+		Date: data,
+		Next: nil,
 	}
 
 	if ll.head == nil {
 		ll.head = node
 	} else {
-		node.next = ll.head
+		node.Next = ll.head
 		ll.head = node
 	}
 	ll.size++
@@ -60,17 +60,17 @@ func (ll *SingleLinkedList) InsertBeginning(data interface{}) {
 
 func (ll *SingleLinkedList) InsertEnd(data interface{}) {
 	node := &SingleLinkedNode{
-		data: data,
-		next: nil,
+		Date: data,
+		Next: nil,
 	}
 	if ll.head == nil {
 		ll.head = node
 	} else {
 		current := ll.head
-		for current.next != nil {
-			current = current.next
+		for current.Next != nil {
+			current = current.Next
 		}
-		current.next = node
+		current.Next = node
 	}
 	ll.size++
 }
@@ -80,8 +80,8 @@ func (ll *SingleLinkedList) Insert(position int, data interface{}) error {
 		return fmt.Errorf("insert: Index out of bounds")
 	}
 	node := &SingleLinkedNode{
-		data: data,
-		next: nil,
+		Date: data,
+		Next: nil,
 	}
 	var prev, current *SingleLinkedNode
 	current = ll.head
@@ -89,16 +89,16 @@ func (ll *SingleLinkedList) Insert(position int, data interface{}) error {
 
 	for position > 1 {
 		prev = current
-		current = current.next
+		current = current.Next
 		position = position - 1
 	}
 
 	if prev == nil {
-		node.next = current
+		node.Next = current
 		ll.head = node
 	} else {
-		node.next = current
-		prev.next = node
+		node.Next = current
+		prev.Next = node
 	}
 	ll.size++
 	return nil
@@ -109,9 +109,9 @@ func (ll *SingleLinkedList) DeleteFirst() (interface{}, error) {
 		return nil, fmt.Errorf("deleteFront: List is empty")
 	}
 	current := ll.head
-	ll.head = ll.head.next
+	ll.head = ll.head.Next
 	ll.size--
-	return current.data, nil
+	return current.Date, nil
 }
 
 func (ll *SingleLinkedList) DeleteLast() (interface{}, error) {
@@ -122,17 +122,17 @@ func (ll *SingleLinkedList) DeleteLast() (interface{}, error) {
 	var current, prev *SingleLinkedNode
 	current = ll.head
 	prev = nil
-	for current.next != nil {
+	for current.Next != nil {
 		prev = current
-		current = current.next
+		current = current.Next
 	}
 	if prev == nil {
 		ll.head = nil
 	} else {
-		prev.next = nil
+		prev.Next = nil
 	}
 	ll.size--
-	return current.data, nil
+	return current.Date, nil
 }
 
 func (ll *SingleLinkedList) DeleteAt(position int) (interface{}, error) {
@@ -145,25 +145,33 @@ func (ll *SingleLinkedList) DeleteAt(position int) (interface{}, error) {
 	prev = nil
 	for position > 1 {
 		prev = current
-		current = current.next
+		current = current.Next
 		position--
 	}
 
 	if prev == nil {
-		ll.head = ll.head.next
+		ll.head = ll.head.Next
 	} else {
-		prev.next = current.next
+		prev.Next = current.Next
 	}
 	ll.size--
-	return current.data, nil
+	return current.Date, nil
 }
 
 func (ll *SingleLinkedList) FindKthFromEnd(n int) interface{} {
 	first, second := ll.head, ll.head
 	for ; n > 0; n-- {
-		second = second.next
+		second = second.Next
 	}
-	for ; second.next != nil; first, second = first.next, second.next {
+	for ; second.Next != nil; first, second = first.Next, second.Next {
 	}
-	return first.next.data
+	return first.Next.Date
+}
+
+func (ll *SingleLinkedList) Link(node1 *SingleLinkedNode, node2 *SingleLinkedNode) {
+	if ll.head == nil {
+		ll.head = node1
+	}
+	node1.Next = node2
+	ll.size++
 }
