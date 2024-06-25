@@ -1,11 +1,13 @@
 package stack
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestPushSimpleStack(t *testing.T) {
+	fmt.Println("salam 1")
 	sample := NewSimpleStack(10)
 	sample.Push(1)
 	sample.Push(2)
@@ -15,6 +17,7 @@ func TestPushSimpleStack(t *testing.T) {
 }
 
 func TestIsFullSimpleStack(t *testing.T) {
+	fmt.Println("salam 2")
 	sample := NewSimpleStack(3)
 	sample.Push(1)
 	sample.Push(2)
