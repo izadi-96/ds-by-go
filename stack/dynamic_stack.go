@@ -2,40 +2,40 @@ package stack
 
 import "errors"
 
-type DynamicStack struct {
+type DynamicStack[T any] struct {
 	top      int
 	capacity uint
 	data     []interface{}
 }
 
-func (s *DynamicStack) Init(capacity uint) *DynamicStack {
+func (s *DynamicStack[T]) Init(capacity uint) *DynamicStack[T] {
 	s.top = -1
 	s.capacity = capacity
 	s.data = make([]interface{}, capacity)
 	return s
 }
 
-func NewDynamicStack(capacity uint) *DynamicStack {
-	return new(DynamicStack).Init(capacity)
+func NewDynamicStack[T any](capacity uint) *DynamicStack[T] {
+	return new(DynamicStack[T]).Init(capacity)
 }
 
-func (s *DynamicStack) IsEmpty() bool {
+func (s *DynamicStack[T]) IsEmpty() bool {
 	return s.top == -1
 }
 
-func (s *DynamicStack) IsFull() bool {
+func (s *DynamicStack[T]) IsFull() bool {
 	return s.top == int(s.capacity)-1
 }
 
-func (s *DynamicStack) Size() uint {
+func (s *DynamicStack[T]) Size() uint {
 	return uint(s.top + 1)
 }
 
-func (s *DynamicStack) Capacity() uint {
+func (s *DynamicStack[T]) Capacity() uint {
 	return s.capacity
 }
 
-func (s *DynamicStack) resize() {
+func (s *DynamicStack[T]) resize() {
 	if s.IsFull() {
 		s.capacity = s.capacity * 2
 	} else {
@@ -46,7 +46,7 @@ func (s *DynamicStack) resize() {
 	s.data = newDate
 }
 
-func (s *DynamicStack) Push(data interface{}) error {
+func (s *DynamicStack[T]) Push(data interface{}) error {
 	if s.IsFull() {
 		s.resize()
 	}
@@ -55,7 +55,7 @@ func (s *DynamicStack) Push(data interface{}) error {
 	return nil
 }
 
-func (s *DynamicStack) Pop() (interface{}, error) {
+func (s *DynamicStack[T]) Pop() (interface{}, error) {
 	if s.IsEmpty() {
 		return nil, errors.New("stack is empty")
 	}
@@ -67,14 +67,14 @@ func (s *DynamicStack) Pop() (interface{}, error) {
 	return d, nil
 }
 
-func (s *DynamicStack) Peek() (interface{}, error) {
+func (s *DynamicStack[T]) Peek() (interface{}, error) {
 	if s.IsEmpty() {
 		return nil, errors.New("stack is empty")
 	}
 	return s.data[s.top], nil
 }
 
-func (s *DynamicStack) Drain() {
+func (s *DynamicStack[T]) Drain() {
 	s.data = nil
 	s.top = -1
 }
