@@ -24,4 +24,6 @@ go.sum
 
 
 # IDE
-.idea/
+./.idea
+.idea
+.idea/*
