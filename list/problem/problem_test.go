@@ -8,12 +8,6 @@ import (
 
 // find kth from end
 func TestFindFromEnd(t *testing.T) {
-	l := list.SingleLinkedList{}
-	l.InsertBeginning(1)
-	l.InsertBeginning(2)
-	l.InsertBeginning(3)
-	l.InsertBeginning(4)
-	l.InsertBeginning(5)
-
-	assert.Equal(t, 2, l.FindKthFromEnd(2))
+	ll := list.NewSingleLinkedList([]interface{}{1, 2, 3, 4, 5})
+	assert.Equal(t, 4, ll.FindKthFromEnd(2))
 }

@@ -14,6 +14,14 @@ type SingleLinkedList struct {
 	size int
 }
 
+func NewSingleLinkedList(arr []interface{}) *SingleLinkedList {
+	ll := &SingleLinkedList{}
+	for _, v := range arr {
+		ll.InsertEnd(v)
+	}
+	return ll
+}
+
 func (ll *SingleLinkedList) Display() error {
 	if ll.head == nil {
 		return fmt.Errorf("display: List is empty")
